@@ -70,7 +70,7 @@ const Favorites = () => {
   });
 
   return (
-    <div className="primary relative h-screen flex justify-center items-center">
+    <div className="primary relative min-h-screen flex justify-center items-center py-8">
       <div
         ref={ref}
         className={`absolute top-0 left-0 w-full h-full z-0 pointer-events-none transition-all duration-1000 ${
@@ -86,7 +86,7 @@ const Favorites = () => {
             style={{
               top: `${5 + ((idx * 7) % 90)}%`,
               left: `${5 + ((idx * 13) % 90)}%`,
-              fontSize: `${24 + (idx % 5) * 6}px`,
+              fontSize: `${16 + (idx % 5) * 4}px`, // Thu nhỏ icon trên desktop
             }}
           >
             <Icon />
@@ -94,18 +94,18 @@ const Favorites = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center h-full z-10 relative">
+      <div className="container mx-auto px-4 py-4 flex flex-col items-center justify-center min-h-screen z-10 relative overflow-hidden">
         <div
           ref={moodboardRef}
-          className="border-2 border-amber-100 rounded-lg shadow-lg bg-gradient-to-r from-amber-300 to-amber-400 w-full sm:w-3/4 p-8 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 overflow-hidden backdrop-blur-md bg-opacity-80 relative"
+          className="border-2 border-amber-100 rounded-lg shadow-lg bg-gradient-to-r from-amber-300 to-amber-400 w-full max-w-4xl p-6 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 overflow-hidden backdrop-blur-md bg-opacity-80 relative"
         >
           <h1
-            className="text-6xl font-bold text-center text-white mb-4 relative"
+            className="text-5xl font-bold text-center text-white mb-4 relative"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Moodboard
             <span
-              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-96 h-2"
+              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-80 h-2"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, #ff0000, transparent)",
@@ -115,11 +115,11 @@ const Favorites = () => {
             />
           </h1>
 
-          <p className="text-lg text-gray-800 mb-8 text-center">
+          <p className="text-base text-gray-800 mb-6 text-center">
             Select a mood to see the corresponding style and props.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 moodboard-container z-10 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 moodboard-container z-10 relative">
             {moodData.map((mood) => (
               <div
                 key={mood.id}
@@ -129,10 +129,10 @@ const Favorites = () => {
                 <img
                   src={mood.image}
                   alt={mood.name}
-                  className="w-full h-80 object-cover rounded-lg shadow-lg transition-all duration-500 ease-in-out cursor-pointer"
+                  className="w-full h-64 object-cover rounded-lg shadow-lg transition-all duration-500 ease-in-out cursor-pointer"
                 />
                 <h3
-                  className="text-xl font-semibold mt-4 text-gray-800 text-center"
+                  className="text-lg font-semibold mt-3 text-gray-800 text-center"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   {mood.name}
@@ -142,7 +142,7 @@ const Favorites = () => {
           </div>
 
           <button
-            className="px-4 py-2 bg-red-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300 cursor-pointer mb-6 flex justify-center w-80 mt-1 mx-auto"
+            className="px-4 py-2 bg-red-500 text-white text-base font-semibold rounded-full shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300 cursor-pointer mt-6 mx-auto block w-64"
             onClick={() => navigate("/")}
           >
             Back to Home
@@ -190,42 +190,51 @@ const Favorites = () => {
             height: auto; /* Bỏ giới hạn chiều cao để cuộn được */
             overflow-y: auto; /* Bật cuộn dọc */
           }
-          .h-full {
-            height: auto; /* Container chính tự mở rộng theo nội dung */
+          .min-h-screen {
             min-height: 100vh; /* Đảm bảo ít nhất bằng chiều cao màn hình */
           }
-          .text-6xl {
+          .text-5xl {
             font-size: 2.5rem; /* Giảm kích thước chữ tiêu đề */
           }
-          .w-96 {
-            width: 12rem; /* Giảm chiều rộng thanh gradient */
+          .w-80 {
+            width: 12rem; /* Giảm chiều rộng thanh gradient và nút */
           }
-          .h-80 {
+          .h-64 {
             height: 14rem; /* Giảm chiều cao ảnh */
           }
-          .w-80 {
-            width: 14rem; /* Giảm chiều rộng nút */
+          .w-64 {
+            width: 12rem; /* Giảm chiều rộng nút */
           }
-          .text-lg {
+          .text-base {
             font-size: 1rem; /* Giảm kích thước chữ mô tả */
           }
-          .text-xl {
+          .text-lg {
             font-size: 1.25rem; /* Giảm kích thước tiêu đề mood */
           }
-          .p-8 {
+          .p-6 {
             padding: 1.5rem; /* Giảm padding */
           }
           .icon-float {
-            fontSize: 1rem !important; /* Giảm kích thước icon nền */
-          }
-          .mb-8 {
-            margin-bottom: 2rem; /* Giảm khoảng cách dưới đoạn mô tả */
-          }
-          .mt-1 {
-            margin-top: 0.5rem; /* Giảm khoảng cách trên nút */
+            font-size: 0.875rem !important; /* Giảm kích thước icon nền */
           }
           .mb-6 {
-            margin-bottom: 1.5rem; /* Giảm khoảng cách dưới nút */
+            margin-bottom: 1.5rem; /* Giảm khoảng cách dưới đoạn mô tả */
+          }
+          .mt-6 {
+            margin-top: 1.5rem; /* Giảm khoảng cách trên nút */
+          }
+          .gap-6 {
+            gap: 1.5rem; /* Giảm khoảng cách giữa các mood items */
+          }
+        }
+
+        /* Desktop tối ưu hóa */
+        @media (min-width: 641px) {
+          .primary {
+            min-height: 100vh; /* Đảm bảo chiều cao tối thiểu bằng viewport */
+          }
+          .max-w-4xl {
+            max-width: 56rem; /* Giới hạn chiều rộng tối đa */
           }
         }
       `}</style>
