@@ -1,58 +1,80 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import mainImg from "../../assets/memento.jpg";
-import outfit1Img from "../../assets/image1.jpg";
-import outfit2Img from "../../assets/image2.jpg";
-import outfit3Img from "../../assets/image3.jpg";
-import outfit4Img from "../../assets/image4.jpg";
-import propImg from "../../assets/image5.jpg";
-import sample1Img from "../../assets/image3.jpg";
-import sample2Img from "../../assets/image4.jpg";
-import sample3Img from "../../assets/image2.jpg";
-import sample4Img from "../../assets/image1.jpg";
+import { useInView } from "react-intersection-observer";
+import mainImg1 from "../../assets/duoitancay.png";
+import mainImg2 from "../../assets/giadinh.jpg";
+import mainImg3 from "../../assets/phieudu4.jpg";
+import outfit1Img from "../../assets/duoitancay6.png";
+import outfit2Img from "../../assets/duoitancay9.jpg";
+import outfit3Img from "../../assets/giadinh1.jpg";
+import outfit4Img from "../../assets/giadinh2.jpg";
+import outfit5Img from "../../assets/phieudu7.png";
+import outfit6Img from "../../assets/phieudu5.png";
+import propImg from "../../assets/duoitancay7.jpg";
+import propImg1 from "../../assets/giadinh3.jpg";
+import propImg3 from "../../assets/phieudu6.jpg";
+import sample1Img from "../../assets/duoitancay8.jpg";
+import sample2Img from "../../assets/duoitancay10.jpg";
+import sample3Img from "../../assets/giadinh4.jpg";
+import sample4Img from "../../assets/giadinh5.jpg";
+import sample5Img from "../../assets/phieudu7.jpg";
+import sample6Img from "../../assets/phieudu8.jpg";
+import {
+  FaStar,
+  FaHeart,
+  FaCameraRetro,
+  FaRocket,
+  FaSun,
+  FaMoon,
+  FaUserAstronaut,
+  FaSatellite,
+  FaFlag,
+  FaMountain,
+  FaHome,
+} from "react-icons/fa";
 
 const moodDetails = {
-  serene: {
-    name: "Serene",
-    title: "First Memory",
-    subtitle: "Calm",
-    mainImage: mainImg,
-    colors: ["#F5E6CC", "#D9C2A1", "#8B6F47"],
+  saigon1: {
+    name: "Dưới tán cây",
+    title: "Sài Gòn",
+    subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn",
+    mainImage: mainImg1,
+    colors: ["#bd3b1f", "#ec921f", "#dfcf12", "#56bd22", "#cf3dcf"],
     outfitImages: [outfit1Img, outfit2Img],
     propImage: propImg,
     sampleImages: [sample1Img, sample2Img],
     theme: {
-      background: "linear-gradient(to right, #F5E6CC, #E6D5B8)",
-      textColor: "#8B6F47",
-      buttonBg: "#8B6F47",
-      buttonText: "#FFFFFF",
+      background: "linear-gradient(to right, #bd3b1f, #cf3dcf)",
+      textColor: "#dfcf12",
+      buttonBg: "#bac751",
+      buttonText: "#c24931",
     },
   },
-  nostalgic: {
-    name: "Nostalgic",
-    title: "Old Times",
-    subtitle: "Warm",
-    mainImage: mainImg,
-    colors: ["#D4A017", "#8B4513", "#4A2C0A"],
+  saigon2: {
+    name: "Gia Định",
+    title: "Sài Gòn",
+    subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Gia Định",
+    mainImage: mainImg2,
+    colors: ["#bd3b1f", "#deafa5", "#e5dc32"],
     outfitImages: [outfit3Img, outfit4Img],
-    propImage: propImg,
+    propImage: propImg1,
     sampleImages: [sample3Img, sample4Img],
     theme: {
-      background: "linear-gradient(to right, #D4A017, #A67C00)",
-      textColor: "#4A2C0A",
+      background: "linear-gradient(to right, #080807, #516378)",
+      textColor: "#f7f8ed",
       buttonBg: "#8B4513",
       buttonText: "#FFFFFF",
     },
   },
-  cheerful: {
-    name: "Cheerful",
-    title: "Joyful Days",
-    subtitle: "Bright",
-    mainImage: mainImg,
+  saigon3: {
+    name: "Phiêu du",
+    title: "Sài Gòn",
+    subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Phiêu du",
+    mainImage: mainImg3,
     colors: ["#FFD700", "#FF6347", "#FF4500"],
-    outfitImages: [outfit1Img, outfit2Img],
-    propImage: propImg,
-    sampleImages: [sample1Img, sample2Img],
+    outfitImages: [outfit5Img, outfit6Img],
+    propImage: propImg3,
+    sampleImages: [sample5Img, sample6Img],
     theme: {
       background: "linear-gradient(to right, #FFD700, #FF8C00)",
       textColor: "#FF4500",
@@ -65,51 +87,23 @@ const moodDetails = {
 const FavoritesDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const detailRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isZoomed, setIsZoomed] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  // Lấy dữ liệu mood dựa trên id
+  const [detailRef, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   const mood = moodDetails[id];
 
-  // Kiểm tra nếu id không hợp lệ, chuyển hướng đến NotFound
   useEffect(() => {
     if (!mood) {
       navigate("/notfound", { replace: true });
     }
   }, [mood, navigate]);
 
-  // useEffect cho IntersectionObserver
-  useEffect(() => {
-    const detailElement = detailRef.current;
-
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.remove("opacity-0", "translate-y-8");
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, options);
-
-    if (detailElement) {
-      observer.observe(detailElement);
-    }
-
-    return () => {
-      if (detailElement) observer.unobserve(detailElement);
-    };
-  }, []);
-
-  // Nếu mood không tồn tại, không render gì cả (trong khi chuyển hướng)
   if (!mood) {
     return null;
   }
@@ -128,34 +122,101 @@ const FavoritesDetail = () => {
     setIsZoomed((prev) => !prev);
   };
 
-  // Xử lý nút Contact: Hiển thị modal và điều hướng sang /contact
   const handleContact = () => {
     setShowSuccessModal(true);
     setTimeout(() => {
       setShowSuccessModal(false);
-      navigate("/contact", {
-        state: {
-          mood: mood, // Truyền toàn bộ dữ liệu mood
-        },
-      });
+      navigate("/contact", { state: { mood } });
     }, 5000);
   };
 
   const closeSuccessModal = () => {
     setShowSuccessModal(false);
-    navigate("/contact", {
-      state: {
-        mood: mood,
-      },
-    });
+    navigate("/contact", { state: { mood } });
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <div className="min-h-screen bg-gray-900 py-8 relative overflow-hidden">
+      {/* Background Icons with Animations */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <FaStar
+          className="absolute top-10 left-10 text-white text-2xl"
+          style={{ animation: "twinkle 2s infinite" }}
+        />
+        <FaStar
+          className="absolute top-20 right-20 text-white text-2xl"
+          style={{ animation: "twinkle 2s infinite 0.5s" }}
+        />
+        <FaStar
+          className="absolute top-40 left-20 text-white text-2xl"
+          style={{ animation: "twinkle 2s infinite 1s" }}
+        />
+        <div
+          className="absolute top-10 left-0 w-4 h-1 bg-yellow-300 rounded-full"
+          style={{ animation: "flyAcross 5s linear infinite 2s" }}
+        />
+        <div
+          className="absolute top-15 left-0 w-4 h-1 bg-yellow-300 rounded-full"
+          style={{ animation: "flyAcross 5s linear infinite 3s" }}
+        />
+        <div
+          className="absolute top-5 left-0 w-4 h-1 bg-yellow-300 rounded-full"
+          style={{ animation: "flyAcross 5s linear infinite 1s" }}
+        />
+        <FaSun
+          className="absolute top-10 right-10 text-yellow-400 text-4xl"
+          style={{ animation: "float 4s infinite" }}
+        />
+        <FaMoon
+          className="absolute top-20 left-1/4 text-white text-4xl"
+          style={{ animation: "orbit 10s linear infinite" }}
+        />
+        <div
+          className="absolute top-1/3 left-1/3 w-10 h-10 bg-purple-400 rounded-full"
+          style={{
+            animation: "float 4s infinite",
+            background: "radial-gradient(circle, #a855f7, #6b21a8)",
+          }}
+        />
+        <div
+          className="absolute top-1/2 right-1/4 w-8 h-8 bg-orange-400 rounded-full"
+          style={{
+            animation: "float 4s infinite 1s",
+            background: "radial-gradient(circle, #f97316, #c2410c)",
+          }}
+        />
+        <FaRocket
+          className="absolute top-2/3 left-0 text-red-400 text-5xl transform rotate-45"
+          style={{ animation: "flyAcross 10s linear infinite" }}
+        />
+        <FaUserAstronaut
+          className="absolute bottom-10 left-1/4 text-white text-4xl"
+          style={{ animation: "wave 2s infinite" }}
+        />
+        <FaSatellite
+          className="absolute bottom-20 right-1/3 text-gray-300 text-3xl"
+          style={{ animation: "orbitEarth 5s linear infinite" }}
+        />
+        <FaFlag
+          className="absolute bottom-10 right-10 text-red-500 text-3xl"
+          style={{ animation: "pulse 2s infinite" }}
+        />
+        <FaMountain
+          className="absolute bottom-15 left-1/2 text-gray-600 text-3xl"
+          style={{ animation: "float 3s infinite" }}
+        />
+        <FaHome
+          className="absolute bottom-20 left-1/5 text-brown-500 text-3xl"
+          style={{ animation: "bounce 2s infinite" }}
+        />
+      </div>
+
       <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-screen z-10">
         <div
           ref={detailRef}
-          className="w-full max-w-3xl p-8 rounded-lg shadow-lg transition-all duration-1000 ease-in-out opacity-0 translate-y-8"
+          className={`w-full max-w-3xl p-8 rounded-lg shadow-lg transition-all duration-1000 ease-in-out ${
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
           style={{ background: mood.theme.background }}
         >
           <button
@@ -166,14 +227,16 @@ const FavoritesDetail = () => {
               color: mood.theme.buttonText,
             }}
           >
-            Back
+            <FaRocket className="inline-block mr-2 animate-bounce" /> Back
           </button>
 
           <div className="relative">
             <img
               src={mood.mainImage}
               alt={mood.title}
-              className="w-full h-80 object-cover rounded-lg shadow-lg cursor-pointer"
+              className={`w-full h-80 object-cover rounded-lg shadow-lg cursor-pointer transition-transform duration-500 ease-in-out ${
+                inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
+              } hover:scale-105`}
               onClick={() => handleImageClick(mood.mainImage)}
             />
             <button
@@ -183,6 +246,7 @@ const FavoritesDetail = () => {
                 color: mood.theme.buttonText,
               }}
             >
+              <FaStar className="inline-block mr-2 animate-twinkle" />
               {mood.name.toUpperCase()}
             </button>
           </div>
@@ -208,13 +272,15 @@ const FavoritesDetail = () => {
               className="text-xl font-semibold mb-4 flex items-center"
               style={{ color: mood.theme.textColor }}
             >
-              <span className="mr-2">🎨</span> Color Palette
+              <FaHeart className="mr-2 animate-pulse" /> Color Palette
             </h2>
             <div className="flex justify-center gap-4">
               {mood.colors.map((color, index) => (
                 <div
                   key={index}
-                  className="w-12 h-12 rounded-full shadow-md"
+                  className={`w-12 h-12 rounded-full shadow-md transition-transform duration-500 ease-in-out ${
+                    inView ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                  } hover:scale-110`}
                   style={{ backgroundColor: color }}
                 />
               ))}
@@ -226,7 +292,7 @@ const FavoritesDetail = () => {
               className="text-xl font-semibold mb-4 flex items-center"
               style={{ color: mood.theme.textColor }}
             >
-              <span className="mr-2">👗</span> Outfit
+              <FaCameraRetro className="mr-2 animate-bounce" /> Outfit
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {mood.outfitImages.map((img, index) => (
@@ -234,8 +300,11 @@ const FavoritesDetail = () => {
                   key={index}
                   src={img}
                   alt={`Outfit ${index + 1}`}
-                  className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
+                  className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                    inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
+                  } hover:scale-105`}
                   onClick={() => handleImageClick(img)}
+                  style={{ transitionDelay: `${index * 100}ms` }} // Delay để ảnh xuất hiện lần lượt
                 />
               ))}
             </div>
@@ -246,12 +315,14 @@ const FavoritesDetail = () => {
               className="text-xl font-semibold mb-4 flex items-center"
               style={{ color: mood.theme.textColor }}
             >
-              <span className="mr-2">🛠️</span> Props
+              <FaSun className="mr-2 animate-float" /> Props
             </h2>
             <img
               src={mood.propImage}
               alt="Prop"
-              className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
+              className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
+              } hover:scale-105`}
               onClick={() => handleImageClick(mood.propImage)}
             />
           </div>
@@ -261,7 +332,7 @@ const FavoritesDetail = () => {
               className="text-xl font-semibold mb-4 flex items-center"
               style={{ color: mood.theme.textColor }}
             >
-              <span className="mr-2">📸</span> Sample Photos
+              <FaMoon className="mr-2 animate-orbit" /> Sample Photos
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {mood.sampleImages.map((img, index) => (
@@ -269,8 +340,11 @@ const FavoritesDetail = () => {
                   key={index}
                   src={img}
                   alt={`Sample ${index + 1}`}
-                  className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
+                  className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                    inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
+                  } hover:scale-105`}
                   onClick={() => handleImageClick(img)}
+                  style={{ transitionDelay: `${index * 100}ms` }} // Delay để ảnh xuất hiện lần lượt
                 />
               ))}
             </div>
@@ -285,7 +359,7 @@ const FavoritesDetail = () => {
                 color: mood.theme.buttonText,
               }}
             >
-              <span className="mr-2">📞</span> Contact
+              <FaUserAstronaut className="mr-2 animate-wave" /> Contact
             </button>
           </div>
         </div>
@@ -297,7 +371,7 @@ const FavoritesDetail = () => {
             <img
               src={selectedImage}
               alt="Zoomed"
-              className={`max-w-full max-h-full object-contain transition-transform duration-300 ${
+              className={`max-w-full max-h-full object-contain transition-transform duration-500 ease-in-out ${
                 isZoomed ? "scale-150" : "scale-100"
               }`}
               style={{
@@ -315,7 +389,6 @@ const FavoritesDetail = () => {
         </div>
       )}
 
-      {/* Modal thông báo thành công */}
       {showSuccessModal && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[3000]"
@@ -353,6 +426,68 @@ const FavoritesDetail = () => {
           animation: fadeScaleShake 0.6s ease-in-out;
         }
 
+        /* Animations từ Homepage */
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-20px); }
+          60% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+          animation: bounce 2s infinite;
+        }
+
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+        .animate-pulse {
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes orbit {
+          0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+          100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        .animate-orbit {
+          animation: orbit 10s linear infinite;
+        }
+
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+        .animate-twinkle {
+          animation: twinkle 2s infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+          animation: float 4s infinite;
+        }
+
+        @keyframes flyAcross {
+          0% { transform: translateX(-100vw); }
+          100% { transform: translateX(100vw); }
+        }
+
+        @keyframes wave {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(20deg); }
+        }
+        .animate-wave {
+          animation: wave 2s infinite;
+        }
+
+        @keyframes orbitEarth {
+          0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+          100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 640px) {
           .max-w-3xl {
             max-width: 100%;
@@ -372,11 +507,6 @@ const FavoritesDetail = () => {
           .text-lg {
             font-size: 1rem;
           }
-        }
-
-        img.cursor-pointer:hover {
-          transform: scale(1.05);
-          transition: transform 0.3s ease-in-out;
         }
       `}</style>
     </div>

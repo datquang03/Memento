@@ -12,7 +12,6 @@ const Navbar = () => {
     "text-white hover:text-red-500 hover:underline hover:underline-offset-4";
 
   const navigate = useNavigate();
-
   const location = useLocation();
 
   useEffect(() => {
@@ -26,9 +25,9 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <div className="shadow-md sticky top-0 z-30 bg-gray-900 third primary">
+    <div className="hidden lg:block shadow-md sticky top-0 z-30 bg-gray-900 third primary">
       <div className="container mx-auto px-2 lg:grid grid-cols-7 gap-8 items-center">
-        <div className="col-span-1 lg:block hidden">
+        <div className="col-span-1">
           <img
             onClick={() => navigate("/")}
             src={logo}

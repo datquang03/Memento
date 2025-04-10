@@ -1,38 +1,69 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import mainImg from "../../assets/memento.jpg";
+import sereneImg from "../../assets/duoitancay4.jpg"; // Hình ảnh giả định 1
+import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh giả định 2
+import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh giả định 3
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
+import { useInView } from "react-intersection-observer";
+import {
+  FaCameraRetro,
+  FaLightbulb,
+  FaImage,
+  FaPhotoVideo,
+  FaRegObjectGroup,
+  FaTripadvisor,
+} from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const PackageSlide = ({ src, id, description, price }) => {
+// Dữ liệu ảo cho 3 package
+const packageData = [
+  {
+    src: sereneImg,
+    id: "duoitancay",
+    description: "Dưới Tán Cây",
+    price: "3.000.000đ",
+  },
+  {
+    src: nostalgicImg,
+    id: "giadinh",
+    description: "Gia Định",
+    price: "3.000.00đ",
+  },
+  {
+    src: cheerfulImg,
+    id: "phieudu",
+    description: "Phiêu Du",
+    price: "3.000.000đ",
+  },
+];
+
+// PackageSlide component
+export const PackageSlide = ({ src, id, description, price }) => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Debug để kiểm tra id và sự kiện onClick
   const handleClick = () => {
-    console.log("Navigating to:", `/packages/${id}`); // Debug giá trị id
     navigate(`/packages/${id}`);
   };
 
   return (
     <div className="relative group cursor-pointer rounded-lg shadow-lg overflow-hidden transition-all duration-500 ease-in-out">
-      {/* Ảnh package với hiệu ứng lấp lánh */}
       <div className="relative">
         <img
           src={src}
           id={id}
-          className={`w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105 group-hover:shadow-xl ${
+          className={`w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:shadow-xl ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
           onLoad={() => setIsLoaded(true)}
-          onClick={handleClick} // Sử dụng hàm handleClick để debug
+          onClick={handleClick}
         />
-        <div className="absolute inset-0 sparkle-effect pointer-events-none"></div>
+        {/* Hiệu ứng phản chiếu gương chéo chỉ khi hover */}
+        <div className="absolute inset-0 mirror-reflection pointer-events-none"></div>
       </div>
-      {/* Thông tin package với hiệu ứng hover */}
       <div
         className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent text-white text-center py-4 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out pointer-events-none"
         style={{
@@ -51,8 +82,68 @@ const PackageSlide = ({ src, id, description, price }) => {
       >
         {price}
       </div>
-      {/* Hiệu ứng viền sáng khi hover */}
       <div className="absolute inset-0 border-4 border-transparent group-hover:border-indigo-500 transition-all duration-500 rounded-lg pointer-events-none"></div>
+    </div>
+  );
+};
+
+// Photography icons section
+const PhotographySection = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const icons = [
+    { icon: <FaCameraRetro size={50} />, label: "Camera" },
+    { icon: <FaTripadvisor size={50} />, label: "Tripod" },
+    { icon: <FaLightbulb size={50} />, label: "Lighting" },
+    { icon: <FaImage size={50} />, label: "Photo Editing" },
+    { icon: <FaPhotoVideo size={50} />, label: "Videography" },
+    { icon: <FaRegObjectGroup size={50} />, label: "Framing" },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      className={`mt-20 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 justify-items-center items-center transition-all duration-1000 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      }`}
+    >
+      {icons.map(({ icon, label }, idx) => (
+        <div
+          key={idx}
+          className="flex flex-col items-center text-white hover:scale-110 transition-transform duration-300"
+        >
+          <div className="mb-2 text-amber-400 animate-float">{icon}</div>
+          <span className="text-sm font-semibold">{label}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Call to Action Section
+const CallToAction = () => {
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
+
+  return (
+    <div
+      ref={ref}
+      className={`mt-20 text-center text-white transition-all duration-1000 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      }`}
+    >
+      <h2
+        className="text-4xl font-bold mb-4 animate-pulse-text"
+        style={{ fontFamily: "'Playfair Display', serif" }}
+      >
+        Let’s Create Memories Together!
+      </h2>
+      <p className="text-lg max-w-2xl mx-auto animate-fade-in">
+        Explore our photography packages and capture your favorite moments in
+        the most stunning ways.
+      </p>
     </div>
   );
 };
@@ -61,25 +152,18 @@ const Packages = () => {
   const packagesRef = useRef(null);
   const [isPackagesVisible, setIsPackagesVisible] = useState(false);
 
-  // Hiệu ứng scroll để load Swiper
   useEffect(() => {
-    const currentRef = packagesRef.current; // Lưu giá trị packagesRef.current vào biến
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setIsPackagesVisible(true);
-        }
-      });
-    }, observerOptions);
+    const currentRef = packagesRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setIsPackagesVisible(true);
+        });
+      },
+      { root: null, rootMargin: "0px", threshold: 0.1 }
+    );
 
     if (currentRef) observer.observe(currentRef);
-
     return () => {
       if (currentRef) observer.unobserve(currentRef);
     };
@@ -88,23 +172,22 @@ const Packages = () => {
   return (
     <Layout>
       <div className="min-h-screen primary py-8 relative overflow-hidden">
-        {/* Hiệu ứng hạt sáng trên nền */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="sparkle"></div>
           <div className="sparkle sparkle-2"></div>
           <div className="sparkle sparkle-3"></div>
+          <div className="pulse-circle top-1/4 left-1/4"></div>
+          <div className="pulse-circle top-2/3 right-1/3 delay-1"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <h1
             className="text-6xl font-bold text-center text-white mb-6 relative animate-twinkle"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-            }}
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Packages
             <span
-              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-96 h-2"
+              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-96 h-2 animate-gradient"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, #ff0000, transparent)",
@@ -113,6 +196,8 @@ const Packages = () => {
               }}
             />
           </h1>
+
+          {/* Package Slide */}
           <div
             ref={packagesRef}
             className={`transition-all duration-1000 ease-in-out transform ${
@@ -136,97 +221,71 @@ const Packages = () => {
               breakpoints={{
                 320: { slidesPerView: 1 },
                 800: { slidesPerView: 2 },
-                1024: { slidesPerView: 4 },
+                1024: { slidesPerView: 3 }, // Giới hạn 3 slide trên màn hình lớn
               }}
               className="mySwiper cursor-pointer"
             >
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 1"
-                  description="Beautiful Sunset"
-                  price="$100"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 2"
-                  description="Mountain Adventure"
-                  price="$200"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 3"
-                  description="City Lights"
-                  price="$300"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 4"
-                  description="Ocean Waves"
-                  price="$400"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 5"
-                  description="Forest Path"
-                  price="$500"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 6"
-                  description="Desert Dunes"
-                  price="$600"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 7"
-                  description="Snowy Peaks"
-                  price="$700"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PackageSlide
-                  src={mainImg}
-                  id="Package 8"
-                  description="Starry Night"
-                  price="$800"
-                />
-              </SwiperSlide>
+              {packageData.map((pkg, idx) => (
+                <SwiperSlide key={idx}>
+                  <PackageSlide
+                    src={pkg.src}
+                    id={pkg.id}
+                    description={pkg.description}
+                    price={pkg.price}
+                  />
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
+
+          {/* Photography Icons */}
+          <PhotographySection />
+
+          {/* Call to Action */}
+          <CallToAction />
         </div>
       </div>
 
-      {/* CSS tùy chỉnh cho animation */}
       <style>{`
-        /* Hiệu ứng lấp lánh cho ảnh package */
-        @keyframes sparkle {
-          0%, 100% {
+        /* Mirror Reflection Effect - Diagonal */
+        .mirror-reflection {
+          background: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          width: 150%;
+          height: 150%;
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          transform: translate(-100%, -100%);
+          opacity: 0;
+          transition: opacity 0s; /* Chỉ dùng để ẩn/hiện tức thì */
+        }
+        .group:hover .mirror-reflection {
+          opacity: 1;
+          animation: reflect-diagonal 2s infinite;
+          animation-delay: 0.2s; /* Delay để chờ scale */
+        }
+
+        @keyframes reflect-diagonal {
+          0% {
+            transform: translate(-100%, -100%);
             opacity: 0;
           }
           50% {
+            transform: translate(0%, 0%);
             opacity: 1;
           }
-        }
-        .sparkle-effect {
-          background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 10%, transparent 10%);
-          background-size: 20px 20px;
-          animation: sparkle 2s infinite;
+          100% {
+            transform: translate(100%, 100%);
+            opacity: 0;
+          }
         }
 
-        /* Hiệu ứng hạt sáng trên nền */
+        /* Background Sparkle Animation */
         .sparkle {
           position: absolute;
           width: 5px;
@@ -235,31 +294,44 @@ const Packages = () => {
           border-radius: 50%;
           animation: sparkle-move 5s infinite;
         }
-        .sparkle-2 {
-          top: 20%;
-          left: 80%;
+        .sparkle-2 { top: 20%; left: 80%; animation-delay: 1s; }
+        .sparkle-3 { top: 60%; left: 30%; animation-delay: 2s; }
+
+        @keyframes sparkle-move {
+          0% { transform: translate(0, 0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translate(100px, 100px); opacity: 0; }
+        }
+
+        /* Pulse Circle Animation */
+        .pulse-circle {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+          border-radius: 50%;
+          animation: pulse 4s infinite;
+        }
+        .delay-1 {
           animation-delay: 1s;
         }
-        .sparkle-3 {
-          top: 60%;
-          left: 30%;
-          animation-delay: 2s;
-        }
-        @keyframes sparkle-move {
+
+        @keyframes pulse {
           0% {
-            transform: translate(0, 0);
-            opacity: 0;
+            transform: scale(1);
+            opacity: 0.5;
           }
           50% {
-            opacity: 1;
+            transform: scale(1.5);
+            opacity: 0.2;
           }
           100% {
-            transform: translate(100px, 100px);
+            transform: scale(2);
             opacity: 0;
           }
         }
 
-        /* Hiệu ứng twinkle cho tiêu đề */
+        /* Twinkle Animation for Title */
         @keyframes twinkle {
           0%, 100% {
             filter: brightness(1);
@@ -272,6 +344,44 @@ const Packages = () => {
         }
         .animate-twinkle {
           animation: twinkle 2s ease-in-out infinite;
+        }
+
+        /* Gradient Animation for Title Underline */
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+
+        /* Float Animation for Icons */
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        /* Pulse Text Animation for Call to Action */
+        @keyframes pulse-text {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        .animate-pulse-text {
+          animation: pulse-text 2s ease-in-out infinite;
+        }
+
+        /* Fade In Animation for Call to Action Text */
+        @keyframes fade-in {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        .animate-fade-in {
+          animation: fade-in 1s ease-out forwards;
         }
       `}</style>
     </Layout>
