@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
 import Layout from "../../components/layout/Layout";
@@ -10,9 +10,14 @@ import {
   FaMoon,
   FaUserAstronaut,
   FaSatellite,
-  FaBolt, // Thêm FaBolt cho hiệu ứng sét
+  FaBolt,
 } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Đăng ký ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 const ContactUs = () => {
   const location = useLocation();
@@ -31,6 +36,69 @@ const ContactUs = () => {
   const { ref: leftColumnRef, inView: leftColumnInView } = useInView({
     triggerOnce: true,
   });
+
+  // Refs cho các phần tử animation
+  const earthRef = useRef(null);
+  const starsRef = useRef([]);
+  const sunRef = useRef(null);
+  const moonRef = useRef(null);
+  const rocketRef = useRef(null);
+
+  useEffect(() => {
+    // Animation cho trái đất
+    gsap.to(earthRef.current, {
+      rotation: 360,
+      duration: 20,
+      repeat: -1,
+      ease: "linear",
+    });
+
+    // Animation ngôi sao nhấp nháy
+    starsRef.current.forEach((star) => {
+      gsap.to(star, {
+        opacity: gsap.utils.random(0.2, 1),
+        duration: gsap.utils.random(1, 3),
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+      });
+    });
+
+    // Animation mặt trời di chuyển theo scroll
+    gsap.to(sunRef.current, {
+      y: "50vh",
+      scrollTrigger: {
+        trigger: ".primary",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      },
+    });
+
+    // Animation mặt trăng orbit theo scroll
+    gsap.to(moonRef.current, {
+      rotation: 360,
+      x: 100,
+      scrollTrigger: {
+        trigger: ".primary",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      },
+    });
+
+    // Animation rocket bay ngang
+    gsap.fromTo(
+      rocketRef.current,
+      { x: "-100vw" },
+      {
+        x: "100vw",
+        duration: 5,
+        repeat: -1,
+        ease: "linear",
+      }
+    );
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,96 +142,65 @@ const ContactUs = () => {
       <div className="min-h-screen primary py-8 relative overflow-hidden">
         {/* Background Animations */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Twinkling Stars */}
+          {/* Trái đất */}
+          <div
+            ref={earthRef}
+            className="absolute top-1/2 left-1/2 w-32 h-32 bg-blue-600 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+            style={{
+              background:
+                "radial-gradient(circle, #00b4d8 0%, #0066cc 50%, #003366 100%)",
+              boxShadow: "0 0 20px rgba(0, 102, 204, 0.8)",
+            }}
+          >
+            {/* Continents */}
+            <div className="absolute w-8 h-4 bg-green-500 rounded-full top-1/3 left-1/4" />
+            <div className="absolute w-6 h-3 bg-green-500 rounded-full bottom-1/3 right-1/4" />
+          </div>
+
+          {/* Ngôi sao */}
           <FaStar
+            ref={(el) => (starsRef.current[0] = el)}
             className="absolute top-10 left-10 text-white text-2xl"
-            style={{ animation: "twinkle 2s infinite" }}
           />
           <FaStar
+            ref={(el) => (starsRef.current[1] = el)}
             className="absolute top-20 right-20 text-white text-2xl"
-            style={{ animation: "twinkle 2s infinite 0.5s" }}
           />
           <FaStar
+            ref={(el) => (starsRef.current[2] = el)}
             className="absolute top-40 left-20 text-white text-2xl"
-            style={{ animation: "twinkle 2s infinite 1s" }}
           />
 
-          {/* Shooting Stars */}
-          <div
-            className="absolute top-10 left-0 w-4 h-1 bg-yellow-300 rounded-full"
-            style={{ animation: "flyAcross 5s linear infinite 2s" }}
-          />
-          <div
-            className="absolute top-15 left-0 w-4 h-1 bg-yellow-300 rounded-full"
-            style={{ animation: "flyAcross 5s linear infinite 3s" }}
-          />
-
-          {/* Floating Planets */}
-          <div
-            className="absolute top-1/3 left-1/4 w-10 h-10 bg-purple-400 rounded-full"
-            style={{
-              animation: "float 4s infinite",
-              background: "radial-gradient(circle, #a855f7, #6b21a8)",
-            }}
-          />
-          <div
-            className="absolute top-1/2 right-1/4 w-8 h-8 bg-orange-400 rounded-full"
-            style={{
-              animation: "float 4s infinite 1s",
-              background: "radial-gradient(circle, #f97316, #c2410c)",
-            }}
-          />
-
-          {/* Sun and Moon */}
+          {/* Mặt trời */}
           <FaSun
+            ref={sunRef}
             className="absolute top-10 right-10 text-yellow-400 text-4xl"
-            style={{ animation: "float 4s infinite" }}
           />
+
+          {/* Mặt trăng */}
           <FaMoon
+            ref={moonRef}
             className="absolute top-20 left-1/3 text-white text-4xl"
-            style={{ animation: "orbit 10s linear infinite" }}
           />
 
-          {/* Flying Rocket */}
+          {/* Rocket */}
           <FaRocket
-            className="absolute top-2/3 left-0 text-red-400 text-5xl transform rotate-45"
-            style={{ animation: "flyAcross 10s linear infinite" }}
+            ref={rocketRef}
+            className="absolute top-2/3 text-red-400 text-5xl transform rotate-45"
           />
 
-          {/* Astronaut */}
+          {/* Các hiệu ứng khác */}
           <FaUserAstronaut
             className="absolute bottom-10 left-1/4 text-white text-4xl"
             style={{ animation: "wave 2s infinite" }}
           />
-
-          {/* Satellite */}
           <FaSatellite
             className="absolute bottom-20 right-1/3 text-gray-300 text-3xl"
             style={{ animation: "orbitEarth 5s linear infinite" }}
           />
-
-          {/* Vortex Effect */}
-          <div
-            className="absolute top-1/2 left-1/2 w-20 h-20 rounded-full border-2 border-dashed border-blue-400 opacity-50"
-            style={{ animation: "vortex 6s linear infinite" }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 w-16 h-16 rounded-full border-2 border-dashed border-blue-300 opacity-50"
-            style={{ animation: "vortex 5s linear infinite reverse" }}
-          />
-
-          {/* Lightning Effects */}
           <FaBolt
             className="absolute top-1/4 left-1/3 text-yellow-300 text-4xl"
             style={{ animation: "lightning 4s infinite 1s" }}
-          />
-          <FaBolt
-            className="absolute bottom-1/4 right-1/4 text-yellow-300 text-3xl"
-            style={{ animation: "lightning 5s infinite 2s" }}
-          />
-          <FaBolt
-            className="absolute top-2/3 left-2/3 text-yellow-300 text-5xl"
-            style={{ animation: "lightning 6s infinite 3s" }}
           />
         </div>
 
@@ -528,21 +565,6 @@ const ContactUs = () => {
             animation: twinkle 2s infinite;
           }
 
-          @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-          }
-
-          @keyframes flyAcross {
-            0% { transform: translateX(-100vw); }
-            100% { transform: translateX(100vw); }
-          }
-
-          @keyframes orbit {
-            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
-          }
-
           @keyframes wave {
             0%, 100% { transform: rotate(0deg); }
             50% { transform: rotate(20deg); }
@@ -581,23 +603,6 @@ const ContactUs = () => {
             animation: fadeScaleShake 0.6s ease-in-out;
           }
 
-          /* Vortex Animation */
-          @keyframes vortex {
-            0% {
-              transform: rotate(0deg) scale(1);
-              opacity: 0.5;
-            }
-            50% {
-              transform: rotate(180deg) scale(1.2);
-              opacity: 0.8;
-            }
-            100% {
-              transform: rotate(360deg) scale(1);
-              opacity: 0.5;
-            }
-          }
-
-          /* Lightning Animation */
           @keyframes lightning {
             0%, 20%, 40%, 60%, 80%, 100% { opacity: 0; }
             10%, 30%, 50%, 70% { opacity: 1; transform: scale(1.1); }
