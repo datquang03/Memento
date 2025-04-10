@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import sereneImg from "../../assets/duoitancay.png";
-import nostalgicImg from "../../assets/giadinh.jpg";
-import cheerfulImg from "../../assets/phieudu4.jpg";
+import nostalgicImg from "../../assets/giadinh2.jpg";
+import cheerfulImg from "../../assets/phieudu5.png";
 import {
   FaSmile,
   FaHeart,
@@ -70,7 +70,7 @@ const Favorites = () => {
   });
 
   return (
-    <div className="primary relative overflow-hidden h-screen flex justify-center items-center">
+    <div className="primary relative h-screen flex justify-center items-center">
       <div
         ref={ref}
         className={`absolute top-0 left-0 w-full h-full z-0 pointer-events-none transition-all duration-1000 ${
@@ -94,13 +94,13 @@ const Favorites = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-screen z-10 relative">
+      <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center h-full z-10 relative">
         <div
           ref={moodboardRef}
-          className="border-2 border-amber-100 rounded-lg shadow-lg bg-gradient-to-r from-amber-300 to-amber-400 w-3/4 p-8 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 overflow-hidden backdrop-blur-md bg-opacity-80 relative"
+          className="border-2 border-amber-100 rounded-lg shadow-lg bg-gradient-to-r from-amber-300 to-amber-400 w-full sm:w-3/4 p-8 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 overflow-hidden backdrop-blur-md bg-opacity-80 relative"
         >
           <h1
-            className="text-6xl font-bold text-center text-white mb-6 relative"
+            className="text-6xl font-bold text-center text-white mb-4 relative"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Moodboard
@@ -142,7 +142,7 @@ const Favorites = () => {
           </div>
 
           <button
-            className="px-4 py-2 bg-red-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300 cursor-pointer mb-6 flex justify-center w-80 mt-10 mx-auto"
+            className="px-4 py-2 bg-red-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300 cursor-pointer mb-6 flex justify-center w-80 mt-1 mx-auto"
             onClick={() => navigate("/")}
           >
             Back to Home
@@ -183,6 +183,51 @@ const Favorites = () => {
         @keyframes float6 { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(-10px, -10px); } }
         @keyframes float7 { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(10px, -5px); } }
         @keyframes float8 { 0%, 100% { transform: translate(0px, 0px) rotate(0deg); } 50% { transform: translate(-5px, -15px) rotate(5deg); } }
+
+        /* Responsive cho điện thoại */
+        @media (max-width: 640px) {
+          .primary {
+            height: auto; /* Bỏ giới hạn chiều cao để cuộn được */
+            overflow-y: auto; /* Bật cuộn dọc */
+          }
+          .h-full {
+            height: auto; /* Container chính tự mở rộng theo nội dung */
+            min-height: 100vh; /* Đảm bảo ít nhất bằng chiều cao màn hình */
+          }
+          .text-6xl {
+            font-size: 2.5rem; /* Giảm kích thước chữ tiêu đề */
+          }
+          .w-96 {
+            width: 12rem; /* Giảm chiều rộng thanh gradient */
+          }
+          .h-80 {
+            height: 14rem; /* Giảm chiều cao ảnh */
+          }
+          .w-80 {
+            width: 14rem; /* Giảm chiều rộng nút */
+          }
+          .text-lg {
+            font-size: 1rem; /* Giảm kích thước chữ mô tả */
+          }
+          .text-xl {
+            font-size: 1.25rem; /* Giảm kích thước tiêu đề mood */
+          }
+          .p-8 {
+            padding: 1.5rem; /* Giảm padding */
+          }
+          .icon-float {
+            fontSize: 1rem !important; /* Giảm kích thước icon nền */
+          }
+          .mb-8 {
+            margin-bottom: 2rem; /* Giảm khoảng cách dưới đoạn mô tả */
+          }
+          .mt-1 {
+            margin-top: 0.5rem; /* Giảm khoảng cách trên nút */
+          }
+          .mb-6 {
+            margin-bottom: 1.5rem; /* Giảm khoảng cách dưới nút */
+          }
+        }
       `}</style>
     </div>
   );

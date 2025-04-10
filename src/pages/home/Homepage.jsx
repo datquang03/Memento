@@ -146,20 +146,16 @@ const Homepage = () => {
 
   // Hàm xử lý mở liên kết Facebook
   const handleFacebookClick = () => {
-    const facebookProfileId = "1000123456789"; // Thay bằng ID thật của bạn
-    const deepLink = `fb://profile/${facebookProfileId}`;
-    const webLink = "https://www.facebook.com/atquang.356747";
+    const mobileLink =
+      "https://www.facebook.com/share/18vw6dAXD5/?mibextid=wwXIfr";
+    const desktopLink = "https://www.facebook.com/atquang.356747";
 
     if (isMobile) {
-      // Thử mở ứng dụng Facebook
-      window.location.href = deepLink;
-      // Fallback về web sau 2 giây nếu ứng dụng không mở
-      setTimeout(() => {
-        window.location.href = webLink;
-      }, 2000);
+      // Điện thoại: mở link share
+      window.location.href = mobileLink;
     } else {
-      // Desktop: mở liên kết web
-      window.open(webLink, "_blank");
+      // Máy tính: mở link profile trong tab mới
+      window.open(desktopLink, "_blank");
     }
   };
 

@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import mainImg1 from "../../assets/duoitancay.png";
-import mainImg2 from "../../assets/giadinh.jpg";
-import mainImg3 from "../../assets/phieudu4.jpg";
-import outfit1Img from "../../assets/duoitancay6.png";
-import outfit2Img from "../../assets/duoitancay9.jpg";
-import outfit3Img from "../../assets/giadinh1.jpg";
-import outfit4Img from "../../assets/giadinh2.jpg";
-import outfit5Img from "../../assets/phieudu7.png";
-import outfit6Img from "../../assets/phieudu5.png";
-import propImg from "../../assets/duoitancay7.jpg";
-import propImg1 from "../../assets/giadinh3.jpg";
-import propImg3 from "../../assets/phieudu6.jpg";
-import sample1Img from "../../assets/duoitancay8.jpg";
-import sample2Img from "../../assets/duoitancay10.jpg";
-import sample3Img from "../../assets/giadinh4.jpg";
-import sample4Img from "../../assets/giadinh5.jpg";
-import sample5Img from "../../assets/phieudu7.jpg";
-import sample6Img from "../../assets/phieudu8.jpg";
+import mainImg2 from "../../assets/giadinh2.jpg";
+import mainImg3 from "../../assets/phieudu5.png";
+import outfit1Img from "../../assets/duoitancay.png";
+import outfit2Img from "../../assets/duoitancay6.png";
+import outfit3Img from "../../assets/giadinh2.jpg";
+import outfit4Img from "../../assets/giadinh1.jpg";
+import outfit5Img from "../../assets/phieudu5.png";
+import outfit6Img from "../../assets/phieudu7.png";
+import propImg from "../../assets/duoitancay8.jpg";
+import propImg1 from "../../assets/duoitancay10.jpg";
+import propImg2 from "../../assets/giadinh4.jpg"; // Thêm ảnh thứ hai cho props
+import propImg3 from "../../assets/giadinh5.jpg";
+import propImg4 from "../../assets/phieudu8.jpg";
+import propImg5 from "../../assets/phieudu7.jpg";
+import sample1Img from "../../assets/duoitancay9.jpg";
+import sample2Img from "../../assets/duoitancay7.jpg";
+import sample3Img from "../../assets/giadinh.jpg";
+import sample4Img from "../../assets/giadinh3.jpg";
+import sample5Img from "../../assets/phieudu4.jpg";
+import sample6Img from "../../assets/phieudu6.jpg";
 import {
   FaStar,
   FaHeart,
@@ -39,13 +42,13 @@ const moodDetails = {
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn",
     mainImage: mainImg1,
-    colors: ["#bd3b1f", "#ec921f", "#dfcf12", "#56bd22", "#cf3dcf"],
+    colors: ["#ffff", "#f0d9b3", "#e3f138"],
     outfitImages: [outfit1Img, outfit2Img],
-    propImage: propImg,
+    propImages: [propImg, propImg1], // Sửa thành mảng 2 ảnh
     sampleImages: [sample1Img, sample2Img],
     theme: {
-      background: "linear-gradient(to right, #bd3b1f, #cf3dcf)",
-      textColor: "#dfcf12",
+      background: "linear-gradient(to right, #66c223, #f0d9b3)",
+      textColor: "#a92d08",
       buttonBg: "#bac751",
       buttonText: "#c24931",
     },
@@ -55,12 +58,12 @@ const moodDetails = {
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Gia Định",
     mainImage: mainImg2,
-    colors: ["#bd3b1f", "#deafa5", "#e5dc32"],
+    colors: ["#e3533c", "#e87b0e", "#d9f016", "#51e31e", "#e72aea"],
     outfitImages: [outfit3Img, outfit4Img],
-    propImage: propImg1,
+    propImages: [propImg2, propImg3], // Sửa thành mảng 2 ảnh
     sampleImages: [sample3Img, sample4Img],
     theme: {
-      background: "linear-gradient(to right, #080807, #516378)",
+      background: "linear-gradient(to right, #a94b38,#e4755e, #e72aea)",
       textColor: "#f7f8ed",
       buttonBg: "#8B4513",
       buttonText: "#FFFFFF",
@@ -71,13 +74,13 @@ const moodDetails = {
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Phiêu du",
     mainImage: mainImg3,
-    colors: ["#FFD700", "#FF6347", "#FF4500"],
+    colors: ["#ffff", "#050404", "#2d383d", "#75868e"],
     outfitImages: [outfit5Img, outfit6Img],
-    propImage: propImg3,
+    propImages: [propImg4, propImg5], // Sửa thành mảng 2 ảnh
     sampleImages: [sample5Img, sample6Img],
     theme: {
-      background: "linear-gradient(to right, #FFD700, #FF8C00)",
-      textColor: "#FF4500",
+      background: "linear-gradient(to right, #405158,#6485cc, #3e6fd7)",
+      textColor: "#ffffff",
       buttonBg: "#FF6347",
       buttonText: "#FFFFFF",
     },
@@ -220,7 +223,7 @@ const FavoritesDetail = () => {
           style={{ background: mood.theme.background }}
         >
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/favorites")}
             className="mb-4 text-sm px-4 py-2 rounded-full shadow-md scale-100 hover:scale-105 transition-all duration-300 cursor-pointer"
             style={{
               backgroundColor: mood.theme.buttonBg,
@@ -289,7 +292,7 @@ const FavoritesDetail = () => {
 
           <div className="mt-8">
             <h2
-              className="text-xl font-semibold mb-4 flex items-center"
+              className="text-xl font-semibold mb-4 flex items-center "
               style={{ color: mood.theme.textColor }}
             >
               <FaCameraRetro className="mr-2 animate-bounce" /> Outfit
@@ -300,11 +303,11 @@ const FavoritesDetail = () => {
                   key={index}
                   src={img}
                   alt={`Outfit ${index + 1}`}
-                  className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                  className={`w-full h-96 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
                     inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
                   } hover:scale-105`}
                   onClick={() => handleImageClick(img)}
-                  style={{ transitionDelay: `${index * 100}ms` }} // Delay để ảnh xuất hiện lần lượt
+                  style={{ transitionDelay: `${index * 100}ms` }}
                 />
               ))}
             </div>
@@ -315,16 +318,22 @@ const FavoritesDetail = () => {
               className="text-xl font-semibold mb-4 flex items-center"
               style={{ color: mood.theme.textColor }}
             >
-              <FaSun className="mr-2 animate-float" /> Props
+              <FaSun className="mr-2 animate-float" /> Makeup & Hairstyle
             </h2>
-            <img
-              src={mood.propImage}
-              alt="Prop"
-              className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
-                inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
-              } hover:scale-105`}
-              onClick={() => handleImageClick(mood.propImage)}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              {mood.propImages.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`Prop ${index + 1}`}
+                  className={`w-full h-72 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                    inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
+                  } hover:scale-105`}
+                  onClick={() => handleImageClick(img)}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                />
+              ))}
+            </div>
           </div>
 
           <div className="mt-8">
@@ -340,11 +349,11 @@ const FavoritesDetail = () => {
                   key={index}
                   src={img}
                   alt={`Sample ${index + 1}`}
-                  className={`w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
+                  className={`w-full h-72 object-cover rounded-lg shadow-md cursor-pointer transition-transform duration-500 ease-in-out ${
                     inView ? "scale-100 opacity-100" : "scale-95 opacity-0"
                   } hover:scale-105`}
                   onClick={() => handleImageClick(img)}
-                  style={{ transitionDelay: `${index * 100}ms` }} // Delay để ảnh xuất hiện lần lượt
+                  style={{ transitionDelay: `${index * 100}ms` }}
                 />
               ))}
             </div>
