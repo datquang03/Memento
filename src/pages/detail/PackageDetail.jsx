@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import Layout from "../../components/layout/Layout";
 import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh từ Packages
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh từ Packages
-import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh từ Packages
+import cheerfulImg from "../../assets/phieudu20.png"; // Hình ảnh từ Packages
 import workImg1 from "../../assets/duoitancay21.png"; // Ảnh giả định cho Our Works
 import workImg2 from "../../assets/duoitancay22.png"; // Ảnh giả định cho Our Works
 import workImg3 from "../../assets/duoitancay23.png"; // Ảnh giả định cho Our Works
@@ -12,10 +12,11 @@ import workImg6 from "../../assets/giadinh9.jpg"; // Ảnh giả định cho Our
 import workImg7 from "../../assets/giadinh10.jpg"; // Ảnh giả định cho Our Works
 import workImg8 from "../../assets/giadinh11.jpg"; // Ảnh giả định cho Our Works
 import workImg9 from "../../assets/giadinh12.png"; // Ảnh giả định cho Our Works
-import workImg10 from "../../assets/phieudu2.png"; // Ảnh giả định cho Our Works
-import workImg11 from "../../assets/phieudu1.jpg"; // Ảnh giả định cho Our Works
-import workImg12 from "../../assets/phieudu3.jpg"; // Ảnh giả định cho Our Works
-import workImg13 from "../../assets/phieudu12.png"; // Ảnh giả định cho Our Works
+import workImg10 from "../../assets/phieudu21.png"; // Ảnh giả định cho Our Works
+import workImg11 from "../../assets/phieudu22.png"; // Ảnh giả định cho Our Works
+import workImg12 from "../../assets/phieudu23.png"; // Ảnh giả định cho Our Works
+import workImg13 from "../../assets/phieudu24.png"; // Ảnh giả định cho Our Works
+import workImg16 from "../../assets/phieudu25.png"; // Ảnh giả định cho Our Works
 import workImg14 from "../../assets/duoitancay25.png"; // Ảnh giả định cho Our Works
 import workImg15 from "../../assets/duoitancay26.png"; // Ảnh giả định cho Our Works
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,7 +53,7 @@ const PackageData = [
     description: "Sài Gòn - Phiêu Du",
     price: "3.000.000đ",
     content: "Khám phá những hành trình phiêu lưu đầy thú vị qua ống kính.",
-    ourWorks: [workImg10, workImg11, workImg12, workImg13], // Ảnh riêng cho Our Works
+    ourWorks: [workImg10, workImg11, workImg12, workImg13, workImg16], // Ảnh riêng cho Our Works
   },
 ];
 

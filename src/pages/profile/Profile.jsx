@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh từ Packages
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh từ Packages
-import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh từ Packages
+import cheerfulImg from "../../assets/phieudu20.png"; // Hình ảnh từ Packages
 import {
   FaTree,
   FaMountain,

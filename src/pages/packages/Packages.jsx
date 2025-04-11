@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh giả định 1
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh giả định 2
-import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh giả định 3
+import cheerfulImg from "../../assets/phieudu20.png"; // Hình ảnh giả định 3
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useInView } from "react-intersection-observer";
