@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Layout from "../../components/layout/Layout";
 import mainImg from "../../assets/memento.jpg";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
 import {
-  FaLaptopCode,
   FaRobot,
   FaCode,
   FaRocket,
@@ -14,45 +9,24 @@ import {
   FaSatellite,
   FaCog,
   FaCloudDownloadAlt,
-  FaUserAstronaut,
   FaServer,
   FaBolt,
   FaDigitalTachograph,
   FaGlobeAmericas,
+  FaUserAstronaut,
+  FaCamera,
+  FaImage,
 } from "react-icons/fa";
 
-const teamMembers = [
-  { name: "Alice Smith", position: "UI/UX Designer", image: mainImg },
-  { name: "Bob Johnson", position: "Full-Stack Developer", image: mainImg },
-  { name: "Charlie Brown", position: "AI Specialist", image: mainImg },
-  { name: "Diana Lee", position: "Cybersecurity Expert", image: mainImg },
-  { name: "Eve Davis", position: "Product Manager", image: mainImg },
-  { name: "Frank Wilson", position: "DevOps Engineer", image: mainImg },
-  { name: "Grace Taylor", position: "Data Scientist", image: mainImg },
-  { name: "Henry Clark", position: "Blockchain Developer", image: mainImg },
-  { name: "Ivy Moore", position: "Cloud Architect", image: mainImg },
-];
-
 const AboutUs = () => {
-  const ceoRef = useRef(null);
-  const memberRefs = useRef([]);
   const missionRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  const checkMobile = () => {
-    setIsMobile(window.innerWidth <= 640);
-  };
+  const visionRef = useRef(null);
+  const essenceRef = useRef(null);
 
   useEffect(() => {
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const ceoElement = ceoRef.current;
-    const memberElements = memberRefs.current.filter(Boolean); // Loại bỏ null/undefined
     const missionElement = missionRef.current;
+    const visionElement = visionRef.current;
+    const essenceElement = essenceRef.current;
 
     const options = {
       root: null,
@@ -70,23 +44,16 @@ const AboutUs = () => {
       });
     }, options);
 
-    if (ceoElement) observer.observe(ceoElement);
-    if (!isMobile) {
-      // Chỉ áp dụng observer cho grid (desktop), không áp dụng cho Swiper
-      memberElements.forEach((ref) => {
-        if (ref) observer.observe(ref);
-      });
-    }
     if (missionElement) observer.observe(missionElement);
+    if (visionElement) observer.observe(visionElement);
+    if (essenceElement) observer.observe(essenceElement);
 
     return () => {
-      if (ceoElement) observer.unobserve(ceoElement);
-      memberElements.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
       if (missionElement) observer.unobserve(missionElement);
+      if (visionElement) observer.unobserve(visionElement);
+      if (essenceElement) observer.unobserve(essenceElement);
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <Layout>
@@ -181,92 +148,41 @@ const AboutUs = () => {
           />
         </h1>
 
-        {/* Hình ảnh CEO */}
-        <div className="flex justify-center mb-12 relative z-10">
-          <div className="text-center">
-            <img
-              ref={ceoRef}
-              src={mainImg}
-              alt="CEO"
-              className="w-64 h-64 object-cover rounded-full shadow-lg mx-auto transition-all duration-1000 ease-in-out opacity-0 translate-y-8 group relative"
-            />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-30 transition-opacity duration-500 tech-glow-effect"></div>
-            <h2
-              className="text-2xl font-semibold mt-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Our CEO
-            </h2>
-            <p className="text-lg text-gray-300">John Doe</p>
-          </div>
-        </div>
-
-        {/* Danh sách thành viên */}
-        <div className="mb-12 relative z-10">
+        {/* Phần Our Essence */}
+        <div
+          ref={essenceRef}
+          className="text-center mb-12 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 relative z-10 mt-12"
+        >
           <h2
-            className="text-3xl font-semibold text-center mb-6 animate-slide-up"
+            className="text-4xl font-semibold mb-6 relative animate-slide-up"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Our Team
-            <FaLaptopCode
-              className="inline-block ml-2 text-blue-400 text-3xl"
+            Our Essence
+            <FaCamera
+              className="inline-block ml-2 text-yellow-300 text-3xl"
               style={{ animation: "pulse 2s ease-in-out infinite" }}
             />
           </h2>
-          {isMobile ? (
-            <Swiper
-              spaceBetween={20}
-              slidesPerView={1}
-              pagination={{ clickable: true }}
-              modules={[Pagination]}
-              className="swiper-container"
-            >
-              {teamMembers.map((member, index) => (
-                <SwiperSlide key={index}>
-                  <div className="text-center">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-40 h-40 object-cover rounded-md shadow-lg mx-auto" // Bỏ opacity-0 và translate-y-8
-                    />
-                    <h3
-                      className="text-lg font-semibold mt-4"
-                      style={{ fontFamily: "'Playfair Display', serif" }}
-                    >
-                      {member.name}
-                    </h3>
-                    <p className="text-md text-gray-300">{member.position}</p>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {teamMembers.map((member, index) => (
-                <div key={index} className="text-center">
-                  <img
-                    ref={(el) => (memberRefs.current[index] = el)}
-                    src={member.image}
-                    alt={member.name}
-                    className="w-40 h-40 object-cover rounded-md shadow-lg mx-auto transition-all duration-1000 ease-in-out opacity-0 translate-y-8 hover:scale-105"
-                  />
-                  <h3
-                    className="text-lg font-semibold mt-4"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    {member.name}
-                  </h3>
-                  <p className="text-md text-gray-300">{member.position}</p>
-                </div>
-              ))}
-            </div>
-          )}
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            At the heart of our studio lies a passion for capturing the soul of
+            every moment, blending timeless artistry with heartfelt storytelling.
+          </p>
+          <div className="flex justify-center gap-8 mt-6">
+            <FaCamera
+              className="text-white text-4xl animate-icon-slide-left"
+              style={{ animationDelay: "0.2s" }}
+            />
+            <FaImage
+              className="text-white text-4xl animate-icon-slide-right"
+              style={{ animationDelay: "0.4s" }}
+            />
+          </div>
         </div>
 
         {/* Phần Our Mission */}
         <div
           ref={missionRef}
-          className="text-center mb-12 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 relative z-10"
+          className="text-center mb-12 transition-all duration-1000 ease-in-out opacity-0 translate-y-8 relative z-10 mt-20"
         >
           <h2
             className="text-4xl font-semibold mb-4 relative animate-slide-up"
@@ -288,8 +204,19 @@ const AboutUs = () => {
             />
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mt-10">
-            We aim to push the boundaries of technology, delivering innovative
-            solutions that shape the future and enhance lives globally.
+            We are committed to delivering a highly personalized experience,
+            blending the elegance of traditional photography techniques with modern
+            quality standards. By embracing the artistry and craftsmanship of film,
+            we help our clients appreciate the true value of everyday moments,
+            turning fleeting memories into cherished works of art.
+          </p>
+          <p
+            ref={visionRef}
+            className="text-lg text-gray-300 max-w-2xl mx-auto mt-6 transition-all duration-1000 ease-in-out opacity-0 translate-y-8"
+          >
+            Furthermore, our vision is to become the leading film photography
+            studio, where authentic and emotional moments are preserved, bringing
+            timeless artistic and nostalgic values.
           </p>
           <div className="mt-8 w-full h-110 relative">
             <img
@@ -329,32 +256,14 @@ const AboutUs = () => {
 
       {/* CSS inline */}
       <style>{`
+        .w-100 { width: 30rem; }
+        .h-100 { height: 27.5rem; }
         @media (max-width: 640px) {
-          .w-64 { width: 12rem; height: 12rem; }
-        }
-        .grid { display: grid; justify-items: center; }
-        .w-40 { width: 10rem; height: 10rem; }
-        @media (max-width: 640px) {
-          .w-40 { width: 8rem; height: 8rem; }
+          .w-100 { width: 100%; }
+          .h-100 { height: 15rem; }
           .text-lg { font-size: 1rem; }
-          .text-md { font-size: 0.875rem; }
+          .text-4xl { font-size: 2rem; }
         }
-        @media (max-width: 768px) {
-          .md\\:grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-        @media (max-width: 640px) {
-          .sm\\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        }
-        .w-120 { width: 30rem; }
-        .h-110 { height: 27.5rem; }
-        @media (max-width: 640px) {
-          .w-120 { width: 100%; }
-          .h-110 { height: 15rem; }
-        }
-        .swiper-container { width: 100%; padding-bottom: 2rem; }
-        .swiper-slide { display: flex; justify-content: center; align-items: center; }
-        .swiper-pagination-bullet { background: #00bfff; opacity: 0.8; }
-        .swiper-pagination-bullet-active { background: #00bfff; opacity: 1; }
 
         @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
         .animate-fade-in { animation: fade-in 1s ease-out forwards; }
@@ -374,8 +283,10 @@ const AboutUs = () => {
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes rotateEarth { 0% { transform: translateX(-50%) rotate(0deg); } 100% { transform: translateX(-50%) rotate(360deg); } }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-        @keyframes tech-glow { 0%, 100% { box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); } 50% { box-shadow: 0 0 20px rgba(0, 191, 255, 1); } }
-        .tech-glow-effect { animation: tech-glow 2s ease-in-out infinite; }
+        @keyframes icon-slide-left { 0% { opacity: 0; transform: translateX(-20px); } 100% { opacity: 1; transform: translateX(0); } }
+        .animate-icon-slide-left { animation: icon-slide-left 0.8s ease-out forwards; }
+        @keyframes icon-slide-right { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
+        .animate-icon-slide-right { animation: icon-slide-right 0.8s ease-out forwards; }
         .earth { width: 1200px; height: 1200px; }
         @media (max-width: 1024px) { .earth { width: 800px; height: 800px; } }
         @media (max-width: 640px) { .earth { width: 600px; height: 600px; } }
