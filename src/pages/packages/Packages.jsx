@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import sereneImg from "../../assets/duoitancay4.jpg"; // Hình ảnh giả định 1
+import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh giả định 1
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh giả định 2
 import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh giả định 3
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,19 +23,19 @@ const packageData = [
   {
     src: sereneImg,
     id: "duoitancay",
-    description: "Dưới Tán Cây",
+    description: "Sài Gòn - Dưới Tán Cây",
     price: "3.000.000đ",
   },
   {
     src: nostalgicImg,
     id: "giadinh",
-    description: "Gia Định",
+    description: "Sài Gòn - Gia Định",
     price: "3.000.00đ",
   },
   {
     src: cheerfulImg,
     id: "phieudu",
-    description: "Phiêu Du",
+    description: "Sài Gòn - Phiêu Du",
     price: "3.000.000đ",
   },
 ];

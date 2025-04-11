@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import sereneImg from "../../assets/duoitancay.png";
-import nostalgicImg from "../../assets/giadinh2.jpg";
-import cheerfulImg from "../../assets/phieudu5.png";
+import sereneImg from "../../assets/duoitancay7.jpg";
+import nostalgicImg from "../../assets/giadinh3.jpg";
+import cheerfulImg from "../../assets/phieudu20.png";
 import {
   FaSmile,
   FaHeart,
@@ -20,9 +20,9 @@ import gsap from "gsap";
 
 // Dữ liệu mood
 const moodData = [
-  { id: "saigon1", name: "Dưới tán cây", image: sereneImg },
-  { id: "saigon2", name: "Gia Định", image: nostalgicImg },
-  { id: "saigon3", name: "Phiêu Du ", image: cheerfulImg },
+  { id: "saigon1", name: "Nàng Thơ", image: sereneImg },
+  { id: "saigon2", name: "Hoài Cổ", image: nostalgicImg },
+  { id: "saigon3", name: "Hiện Đại ", image: cheerfulImg },
 ];
 
 const Favorites = () => {

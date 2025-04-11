@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import sereneImg from "../../assets/duoitancay4.jpg"; // Hình ảnh từ Packages
+import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh từ Packages
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh từ Packages
 import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh từ Packages
 import {
@@ -24,19 +24,19 @@ const favorites = [
   {
     id: "duoitancay",
     src: sereneImg,
-    description: "Dưới Tán Cây",
+    description: "Sài Gòn - Dưới Tán Cây",
     price: "3.000.000đ",
   },
   {
     id: "giadinh",
     src: nostalgicImg,
-    description: "Gia Định",
+    description: "Sài Gòn - Gia Định",
     price: "3.000.000đ",
   },
   {
     id: "phieudu",
     src: cheerfulImg,
-    description: "Phiêu Du",
+    description: "Sài Gòn - Phiêu Du",
     price: "3.000.000đ",
   },
 ];

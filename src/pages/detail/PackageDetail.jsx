@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import Layout from "../../components/layout/Layout";
-import sereneImg from "../../assets/duoitancay4.jpg"; // Hình ảnh từ Packages
+import sereneImg from "../../assets/duoitancay20.png"; // Hình ảnh từ Packages
 import nostalgicImg from "../../assets/giadinh6.jpg"; // Hình ảnh từ Packages
 import cheerfulImg from "../../assets/phieudu.jpg"; // Hình ảnh từ Packages
-import workImg1 from "../../assets/duoitancay11.png"; // Ảnh giả định cho Our Works
-import workImg2 from "../../assets/duoitancay2.jpg"; // Ảnh giả định cho Our Works
-import workImg3 from "../../assets/duoitancay3.jpg"; // Ảnh giả định cho Our Works
+import workImg1 from "../../assets/duoitancay21.png"; // Ảnh giả định cho Our Works
+import workImg2 from "../../assets/duoitancay22.png"; // Ảnh giả định cho Our Works
+import workImg3 from "../../assets/duoitancay23.png"; // Ảnh giả định cho Our Works
 import workImg4 from "../../assets/duoitancay5.jpg"; // Ảnh giả định cho Our Works
 import workImg5 from "../../assets/giadinh8.jpg"; // Ảnh giả định cho Our Works
 import workImg6 from "../../assets/giadinh9.jpg"; // Ảnh giả định cho Our Works
@@ -16,6 +16,8 @@ import workImg10 from "../../assets/phieudu2.png"; // Ảnh giả định cho Ou
 import workImg11 from "../../assets/phieudu1.jpg"; // Ảnh giả định cho Our Works
 import workImg12 from "../../assets/phieudu3.jpg"; // Ảnh giả định cho Our Works
 import workImg13 from "../../assets/phieudu12.png"; // Ảnh giả định cho Our Works
+import workImg14 from "../../assets/duoitancay25.png"; // Ảnh giả định cho Our Works
+import workImg15 from "../../assets/duoitancay26.png"; // Ảnh giả định cho Our Works
 import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -31,15 +33,15 @@ const PackageData = [
   {
     id: "duoitancay",
     src: sereneImg,
-    description: "Dưới Tán Cây",
+    description: "Sài Gòn - Dưới Tán Cây",
     price: "3.000.000đ",
     content: "Chụp ảnh dưới bóng cây xanh mát, mang lại cảm giác yên bình.",
-    ourWorks: [workImg1, workImg2, workImg3, workImg4], // Ảnh riêng cho Our Works
+    ourWorks: [workImg1, workImg2, workImg3, workImg4,workImg14,workImg15], // Ảnh riêng cho Our Works
   },
   {
     id: "giadinh",
     src: nostalgicImg,
-    description: "Gia Định",
+    description: "Sài Gòn - Gia Định",
     price: "3.000.000đ",
     content: "Lưu giữ khoảnh khắc gia đình ấm áp và thân thương.",
     ourWorks: [workImg5, workImg6, workImg7, workImg8, workImg9], // Ảnh riêng cho Our Works
@@ -47,7 +49,7 @@ const PackageData = [
   {
     id: "phieudu",
     src: cheerfulImg,
-    description: "Phiêu Du",
+    description: "Sài Gòn - Phiêu Du",
     price: "3.000.000đ",
     content: "Khám phá những hành trình phiêu lưu đầy thú vị qua ống kính.",
     ourWorks: [workImg10, workImg11, workImg12, workImg13], // Ảnh riêng cho Our Works

@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import mainImg1 from "../../assets/duoitancay.png";
+import mainImg1 from "../../assets/duoitancay7.jpg";
 import mainImg2 from "../../assets/giadinh2.jpg";
 import mainImg3 from "../../assets/phieudu5.png";
 import outfit1Img from "../../assets/duoitancay.png";
 import outfit2Img from "../../assets/duoitancay6.png";
 import outfit3Img from "../../assets/giadinh2.jpg";
 import outfit4Img from "../../assets/giadinh1.jpg";
-import outfit5Img from "../../assets/phieudu5.png";
-import outfit6Img from "../../assets/phieudu7.png";
+import outfit5Img from "../../assets/phieudu20.png";
+import outfit6Img from "../../assets/phieudu21.png";
 import propImg from "../../assets/duoitancay8.jpg";
 import propImg1 from "../../assets/duoitancay10.jpg";
 import propImg2 from "../../assets/giadinh4.jpg"; // Thêm ảnh thứ hai cho props
 import propImg3 from "../../assets/giadinh5.jpg";
 import propImg4 from "../../assets/phieudu8.jpg";
 import propImg5 from "../../assets/phieudu7.jpg";
-import sample1Img from "../../assets/duoitancay9.jpg";
-import sample2Img from "../../assets/duoitancay7.jpg";
+import sample1Img from "../../assets/duoitancay27.png";
+import sample2Img from "../../assets/duoitancay28.png";
 import sample3Img from "../../assets/giadinh.jpg";
 import sample4Img from "../../assets/giadinh3.jpg";
 import sample5Img from "../../assets/phieudu4.jpg";
@@ -38,7 +38,7 @@ import {
 
 const moodDetails = {
   saigon1: {
-    name: "Dưới tán cây",
+    name: "Nàng Thơ",
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn",
     mainImage: mainImg1,
@@ -54,7 +54,7 @@ const moodDetails = {
     },
   },
   saigon2: {
-    name: "Gia Định",
+    name: "Hoài Cổ",
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Gia Định",
     mainImage: mainImg2,
@@ -70,7 +70,7 @@ const moodDetails = {
     },
   },
   saigon3: {
-    name: "Phiêu du",
+    name: "Hiện Đại",
     title: "Sài Gòn",
     subtitle: "Chụp ở các địa điểm nổi tiếng ở Sài Gòn - Phiêu du",
     mainImage: mainImg3,
