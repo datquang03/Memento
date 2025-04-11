@@ -23,19 +23,19 @@ const packageData = [
   {
     src: sereneImg,
     id: "duoitancay",
-    description: "Dưới Tán Cây",
+    description: "Sài Gòn - Dưới Tán Cây",
     price: "3.000.000đ",
   },
   {
     src: nostalgicImg,
     id: "giadinh",
-    description: "Gia Định",
+    description: "Sài Gòn - Gia Định",
     price: "3.000.00đ",
   },
   {
     src: cheerfulImg,
     id: "phieudu",
-    description: "Phiêu Du",
+    description: "Sài Gòn - Phiêu Du",
     price: "3.000.000đ",
   },
 ];

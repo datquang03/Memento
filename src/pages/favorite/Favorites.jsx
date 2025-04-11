@@ -20,9 +20,9 @@ import gsap from "gsap";
 
 // Dữ liệu mood
 const moodData = [
-  { id: "saigon1", name: "Dưới tán cây", image: sereneImg },
-  { id: "saigon2", name: "Gia Định", image: nostalgicImg },
-  { id: "saigon3", name: "Phiêu Du ", image: cheerfulImg },
+  { id: "saigon1", name: "Nàng thơ", image: sereneImg },
+  { id: "saigon2", name: "Hoài cổ", image: nostalgicImg },
+  { id: "saigon3", name: "Hiện đại", image: cheerfulImg },
 ];
 
 const Favorites = () => {
